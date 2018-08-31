@@ -9,6 +9,7 @@ export ANSIBLE_ACTION_PLUGINS=$ara_location/plugins/actions
 export ANSIBLE_LIBRARY=$ara_location/plugins/modules
 
 export USER=$(whoami)
+
 cd ${base_dir}
 
 # Prepare repo and logs directories
@@ -39,7 +40,7 @@ sed -i 's/- import_tasks: setup_nested_virt.yml/#- import_tasks: setup_nested_vi
                           --extra-vars='{"hooks": ["/home/debug_vars.yml"]}'
 
 # Run tests with pytest
-python -m pytest ${base_dir}/test_contra_env_setup.py -v > ${base_dir}/logs/test_contra-env-setup_centos7.log
+python -m pytest ${base_dir}/test_contra_env_setup.py -v > ${base_dir}/logs/test_contra-env-setup_fedora28.log
 
 # Copy logs to the work directory where they can be archived
 if [ ! -z "${WORKSPACE}" ]; then
