@@ -47,4 +47,4 @@ sed -i 's/- import_tasks: setup_nested_virt.yml/#- import_tasks: setup_nested_vi
                           --extra-vars='{"hooks": ["/home/debug_vars.yml"]}'
 
 # Run tests with pytest
-python -m pytest ${base_dir}/test_contra_env_setup.py -v > ${log_dir}/contra_env_setup.log
+python -m pytest ${base_dir}/test_contra_env_setup.py -v > ${log_dir}/contra_env_setup_fedora28.log
