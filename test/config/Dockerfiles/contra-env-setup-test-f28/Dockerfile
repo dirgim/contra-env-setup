@@ -37,7 +37,7 @@ rm -f /lib/systemd/system/sockets.target.wants/*initctl*; \
 rm -f /lib/systemd/system/basic.target.wants/*;\
 rm -f /lib/systemd/system/anaconda.target.wants/*; \
 systemctl  enable libvirtd; \
-systemctl enable virtlockd: \
+systemctl enable virtlockd; \
 systemctl enable debug-shell.service
 
 COPY default.xml /etc/libvirt/qemu/networks/
