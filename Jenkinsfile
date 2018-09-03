@@ -49,7 +49,7 @@ timestamps {
             [
                     buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '50', daysToKeepStr: '', numToKeepStr: '50')),
                     [$class: 'GithubProjectProperty', displayName: '', projectUrlStr: 'https://github.com/CentOS-PaaS-SIG/contra-env-setup/'],
-                    [$class: 'org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty', triggers:[
+                    /*[$class: 'org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty', triggers:[
                             [
                                     $class: 'org.jenkinsci.plugins.ghprb.GhprbTrigger',
                                     orgslist: 'CentOS-PaaS-SIG',
@@ -70,7 +70,7 @@ timestamps {
                                             ]
                                     ]
                             ]
-                    ]],
+                    ]],*/
                     parameters(
                             [
                                     string(name: 'PROJECT_REPO',
