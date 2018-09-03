@@ -36,8 +36,9 @@ rm -f /lib/systemd/system/sockets.target.wants/*udev*; \
 rm -f /lib/systemd/system/sockets.target.wants/*initctl*; \
 rm -f /lib/systemd/system/basic.target.wants/*;\
 rm -f /lib/systemd/system/anaconda.target.wants/*; \
-systemctl enable libvirtd; \
-systemctl enable virtlockd
+systemctl  enable libvirtd; \
+systemctl enable virtlockd: \
+systemctl enable debug-shell.service
 
 COPY default.xml /etc/libvirt/qemu/networks/
 
@@ -47,5 +48,5 @@ RUN pip install ara
 RUN sed -i "/Service/a ExecStartPost=\/bin\/chmod 666 /dev/kvm" /usr/lib/systemd/system/libvirtd.service
 RUN echo "namespaces = []" >> /etc/libvirt/qemu.conf
 
-VOLUME [ "/sys/fs/cgroup"]
+VOLUME ["/sys/fs/cgroup", "/run", "/tmp"]
 CMD ["/usr/sbin/init"]
