@@ -40,6 +40,7 @@ systemctl  enable libvirtd; \
 systemctl enable virtlockd; \
 systemctl enable debug-shell.service
 
+# The default.xml needs to be different if there are multiple containers running
 COPY default.xml /etc/libvirt/qemu/networks/
 
 RUN pip install ara
