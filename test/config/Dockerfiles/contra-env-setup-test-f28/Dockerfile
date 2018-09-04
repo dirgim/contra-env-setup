@@ -48,5 +48,4 @@ RUN pip install ara
 RUN sed -i "/Service/a ExecStartPost=\/bin\/chmod 666 /dev/kvm" /usr/lib/systemd/system/libvirtd.service
 RUN echo "namespaces = []" >> /etc/libvirt/qemu.conf
 
-VOLUME ["/sys/fs/cgroup", "/run", "/tmp"]
 CMD ["/usr/sbin/init"]
