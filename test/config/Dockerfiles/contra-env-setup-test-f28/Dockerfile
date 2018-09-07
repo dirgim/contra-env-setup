@@ -37,16 +37,23 @@ rm -f /lib/systemd/system/sockets.target.wants/*initctl*; \
 rm -f /lib/systemd/system/basic.target.wants/*;\
 rm -f /lib/systemd/system/anaconda.target.wants/*; \
 systemctl  enable libvirtd; \
-systemctl enable virtlockd; \
-systemctl enable debug-shell.service
-
-# The default.xml needs to be different if there are multiple containers running
-COPY default.xml /etc/libvirt/qemu/networks/
+systemctl enable virtlockd
+#systemctl enable debug-shell.service
 
 RUN pip install ara
 
+# The default.xml needs to be have an unique network if there are multiple containers running
+COPY default.xml /etc/libvirt/qemu/networks/
+COPY docker-machines.xml /etc/libvirt/qemu/networks/
+
 # Edit the service file which includes ExecStartPost to chmod /dev/kvm
 RUN sed -i "/Service/a ExecStartPost=\/bin\/chmod 666 /dev/kvm" /usr/lib/systemd/system/libvirtd.service
+
+# Fix for libvirt namespaces
 RUN echo "namespaces = []" >> /etc/libvirt/qemu.conf
+
+RUN curl -o /root/minishift.tgz -L https://github.com/minishift/minishift/releases/download/v1.23.0/minishift-1.23.0-linux-amd64.tgz && tar xvzf /root/minishift.tgz -C /root/
+RUN curl -o /usr/local/bin/docker-machine-driver-kvm -L https://github.com/dhiltgen/docker-machine-kvm/releases/download/v0.10.0/docker-machine-driver-kvm-centos7 && chmod 755 /usr/local/bin/docker-machine-driver-kvm
+COPY fix-minishift.sh $HOME/
 
 CMD ["/usr/sbin/init"]
