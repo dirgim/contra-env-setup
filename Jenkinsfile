@@ -238,6 +238,9 @@ timestamps {
                                 ciMetrics.setMetricTag(jobMeasurement, 'build_result', currentBuild.result)
                                 ciMetrics.setMetricField(jobMeasurement, 'build_time', currentBuild.getDuration())
 
+                                // Archive JUnit results
+                                step([$class: 'JUnitResultArchiver', testResults: '*.xml'])
+
                             }
                         }
                     }
