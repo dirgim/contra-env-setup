@@ -188,22 +188,29 @@ timestamps {
                                 currentStage = "test-env-setup"
                                 stage(currentStage) {
                                     parallel (
-                                        stage("${currentStage}-centos7") {
-                                            envsetupUtils.timedPipelineStep(stepName: "${currentStage}-centos7", debug: true) {
-                                                // Set stage specific vars
-                                                envsetupUtils.setStageEnvVars(currentStage)
+                                        'fedora28': {
+                                            stage("${currentStage}-centos7") {
+                                                envsetupUtils.timedPipelineStep(stepName: "${currentStage}-centos7", debug: true) {
+                                                    // Set stage specific vars
+                                                    envsetupUtils.setStageEnvVars(currentStage)
 
-                                                // Run contra-env-setup test
-                                                pipelineUtils.executeInContainer("${currentStage}-centos7", "contra-env-setup-test-c7", "/home/prepare_and_test.sh")
+                                                    // Run contra-env-setup test
+                                                    pipelineUtils.executeInContainer("${currentStage}-centos7", "contra-env-setup-test-c7", "/home/prepare_and_test.sh")
+                                                }
                                             }
                                         },
-                                        stage("${currentStage}-fedora28") {
-                                            envsetupUtils.timedPipelineStep(stepName: "${currentStage}-fedora28", debug: true) {
-                                                // Set stage specific vars
-                                                envsetupUtils.setStageEnvVars(currentStage)
+                                        'centos7': {
+                                            stage("${currentStage}-fedora28") {
+                                                envsetupUtils.timedPipelineStep(stepName: "${currentStage}-fedora28", debug: true) {
+                                                    // Set stage specific vars
+                                                    envsetupUtils.setStageEnvVars(currentStage)
 
-                                                // Run contra-env-setup test
-                                                pipelineUtils.executeInContainer("${currentStage}-fedora28", "contra-env-setup-test-f28", "/home/prepare_and_test.sh")
+                                                    // Fix for minishift cgrups/cpuset bug
+                                                    pipelineUtils.executeInContainer("${currentStage}-fedora28", "contra-env-setup-test-f28", "/home/fix-minishift.sh || true")
+
+                                                    // Run contra-env-setup test
+                                                    pipelineUtils.executeInContainer("${currentStage}-fedora28", "contra-env-setup-test-f28", "/home/prepare_and_test.sh")
+                                                }
                                             }
                                         }
                                     )
