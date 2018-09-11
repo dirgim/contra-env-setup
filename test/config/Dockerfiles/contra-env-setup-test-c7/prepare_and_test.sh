@@ -38,12 +38,9 @@ fi
 
 popd
 
-# Temporary fix for skipping nested virtualization setup
-sed -i 's/- import_tasks: setup_nested_virt.yml/#- import_tasks: setup_nested_virt.yml/g' ${base_dir}/contra-env-setup/playbooks/roles/prereqs/tasks/main.yml
-
 # Run the playbook locally with added hook for debugging variables needed for testing
 /usr/bin/ansible-playbook -vv -i "localhost," ${base_dir}/contra-env-setup/playbooks/setup.yml -e user=root \
-                          -e ansible_connection=local -e setup_playbook_hooks=true \
+                          -e ansible_connection=local -e setup_nested_virt=false -e setup_playbook_hooks=true \
                           --extra-vars='{"hooks": ["/home/debug_vars.yml"]}'
 
 # Run tests with pytest
