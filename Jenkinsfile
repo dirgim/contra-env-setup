@@ -56,7 +56,7 @@ timestamps {
                                     cron: 'H/5 * * * *',
                                     triggerPhrase: '.*\\[test\\].*',
                                     onlyTriggerPhrase: false,
-                                    useGitHubHooks: false,
+                                    useGitHubHooks: true,
                                     permitAll: true,
                                     autoCloseFailedPullRequests: false,
                                     displayBuildErrorsOnDownstreamBuilds: true,
