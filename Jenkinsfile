@@ -188,7 +188,7 @@ timestamps {
                                 currentStage = "test-env-setup"
                                 stage(currentStage) {
                                     parallel (
-                                        'fedora28': {
+                                        'centos7': {
                                             stage("${currentStage}-centos7") {
                                                 envsetupUtils.timedPipelineStep(stepName: "${currentStage}-centos7", debug: true) {
                                                     // Set stage specific vars
@@ -199,7 +199,7 @@ timestamps {
                                                 }
                                             }
                                         },
-                                        'centos7': {
+                                        'fedora28': {
                                             stage("${currentStage}-fedora28") {
                                                 envsetupUtils.timedPipelineStep(stepName: "${currentStage}-fedora28", debug: true) {
                                                     // Set stage specific vars
