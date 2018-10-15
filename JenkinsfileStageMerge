@@ -100,11 +100,11 @@ pipeline {
         stage("Comment image promotions on PR") {
             steps {
                 script {
-                    def MRComment = "\nThe following image promotions have taken place:\n\n"
+                    def PRComment = "\nThe following image promotions have taken place:\n\n"
                     imageOperations.each {
-                        MRComment = MRComment + "+ ${it}\n"
+                        PRComment = PRComment + "+ ${it}\n"
                     }
-                    addGitLabMRComment comment: "$MRComment"
+                    pullRequest.comment(PRComment)
                 }
             }
         }
